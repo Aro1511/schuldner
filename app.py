@@ -5,10 +5,10 @@ from database import (
     load_schulden, add_schuld, delete_schuld,
     load_bezahlt, add_bezahlt, save_bezahlt
 )
-from logic import berechne_monatsschulden, berechne_jahresschulden
+from logic import berechne_monatsschulden, berechne_jahresschulden, berechne_betrag
 from datetime import datetime
 
-st.title("💰 Dayn maareeyeSchuldenverwaltung – Schuldner & Schuldgeber")
+st.title("💰 Dayn maareeye Schuldenverwaltung – Schuldner & Schuldgeber")
 
 # ---------------------------------------------------------
 # OBERER BEREICH – STATISTIKEN
@@ -23,7 +23,6 @@ anzahl_bezahlt = len(bezahlt)
 st.subheader(f"📌 Daymaha wali lagudin Offene Schulden: **{anzahl_offen} Schuldner**")
 st.subheader(f"📌 Daymaha laguday Bezahlte Schulden: **{anzahl_bezahlt} Einträge**")
 
-# Monat & Jahr bestimmen
 monat = datetime.now().month
 jahr = datetime.now().year
 
@@ -46,10 +45,16 @@ with st.expander("➕ dayn cusub kudar Neuen Schuldner hinzufügen"):
     schuldner = st.text_input("magaca dayn qaataha Name des Schuldners")
     schuldgeber = st.text_input("magaca dayn bixiyaha Name des Schuldgebers")
     art = st.text_input("nuuca dayntu tahay Art der Schulden")
-    betrag = st.number_input("Qiimaha daynta Betrag", min_value=0.0, step=1.0)
+
+    # WICHTIG: Textfeld statt number_input
+    betrag_raw = st.text_input(
+        "Qiimaha daynta Betrag (Rechnung erlaubt, z.B. 2,00 + 1,99)"
+    )
 
     if st.button("kaydi Speichern"):
-        if schuldner and schuldgeber and art and betrag > 0:
+        betrag = berechne_betrag(betrag_raw)
+
+        if schuldner and schuldgeber and art and betrag is not None and betrag > 0:
             eintrag = SchuldEintrag(
                 schuldner=schuldner,
                 schuldgeber=schuldgeber,
@@ -57,11 +62,10 @@ with st.expander("➕ dayn cusub kudar Neuen Schuldner hinzufügen"):
                 betrag=betrag
             )
             add_schuld(eintrag)
-            st.success("Schuld erfolgreich gespeichert")
+            st.success(f"Schuld erfolgreich gespeichert ({betrag} €)")
             st.rerun()
         else:
-            st.error("Bitte alle Felder ausfüllen")
-
+            st.error("Bitte alle Felder korrekt ausfüllen. Betrag muss eine gültige Rechnung sein.")
 
 # ---------------------------------------------------------
 # LISTE DER SCHULDNER
@@ -98,7 +102,6 @@ with st.expander("📋 Daymaha wali lagudin Liste der offenen Schulden"):
     else:
         st.info("Keine offenen Schulden vorhanden")
 
-
 # ---------------------------------------------------------
 # BEZAHLTE SCHULDEN – ANZEIGEN, BEARBEITEN, LÖSCHEN
 # ---------------------------------------------------------
@@ -111,7 +114,6 @@ with st.expander("💼 Daymaha laguday Bezahlte Schulden anzeigen / bearbeiten /
             st.write(f"### {i+1}. {b['schuldner']} hat {b['betrag']} € bezahlt")
             st.write(f"Datum: {b['datum']}")
 
-            # Bearbeiten
             neuer_betrag = st.number_input(
                 f"Neuer Betrag für {b['schuldner']}",
                 value=float(b["betrag"]),
@@ -136,7 +138,6 @@ with st.expander("💼 Daymaha laguday Bezahlte Schulden anzeigen / bearbeiten /
 
     else:
         st.info("Noch keine Schulden bezahlt")
-
 
 # ---------------------------------------------------------
 # BERECHNUNGEN MANUELL

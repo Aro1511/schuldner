@@ -1,12 +1,17 @@
 [
     {
         "schuldner": "Sada Cumar",
-        "betrag": 200.0,
+        "betrag": 100.0,
         "datum": "2025-12-26 18:12"
     },
     {
         "schuldner": "Mako Cilmi",
         "betrag": 12.99,
         "datum": "2025-12-26 19:05"
+    },
+    {
+        "schuldner": "Ali Mohamed",
+        "betrag": 45,
+        "datum": "2025-12-27 16:12"
     }
 ]
