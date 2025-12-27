@@ -8,6 +8,28 @@ from database import (
 from logic import berechne_monatsschulden, berechne_jahresschulden, berechne_betrag
 from datetime import datetime
 
+# ---------------------------------------------------------
+# PWA EINBINDUNG
+# ---------------------------------------------------------
+
+st.markdown("""
+<link rel="manifest" href="/manifest.json">
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js")
+      .then(reg => console.log("Service Worker registriert:", reg))
+      .catch(err => console.log("Service Worker Fehler:", err));
+  });
+}
+</script>
+""", unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# TITEL
+# ---------------------------------------------------------
+
 st.title("💰 Dayn maareeye Schuldenverwaltung – Schuldner & Schuldgeber")
 
 # ---------------------------------------------------------
@@ -46,7 +68,6 @@ with st.expander("➕ dayn cusub kudar Neuen Schuldner hinzufügen"):
     schuldgeber = st.text_input("magaca dayn bixiyaha Name des Schuldgebers")
     art = st.text_input("nuuca dayntu tahay Art der Schulden")
 
-    # WICHTIG: Textfeld statt number_input
     betrag_raw = st.text_input(
         "Qiimaha daynta Betrag (Rechnung erlaubt, z.B. 2,00 + 1,99)"
     )
