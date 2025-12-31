@@ -13,5 +13,10 @@
         "schuldner": "Ali Mohamed",
         "betrag": 45,
         "datum": "2025-12-27 16:12"
+    },
+    {
+        "schuldner": "Zahra Ali",
+        "betrag": 60.0,
+        "datum": "2025-12-31 16:42"
     }
 ]

@@ -1,16 +1,16 @@
 [
     {
-        "schuldner": "Zahra Ali",
-        "schuldgeber": "Abdirazaq hassan",
-        "art": "2 Daasadadood oo caana ah iy5 kilo oo Bariis ah",
-        "betrag": 60.0,
-        "datum": "2025-12-26 19:37"
-    },
-    {
         "schuldner": "Sayid hussen",
         "schuldgeber": "suleman Qabil",
         "art": "5KG oo Bariis ah, 3 Shalmadood iyo daasad Saliid ah",
         "betrag": 34.2,
         "datum": "2025-12-27 16:12"
+    },
+    {
+        "schuldner": "Sucad saleban",
+        "schuldgeber": "qaabil ",
+        "art": "xawaalda ",
+        "betrag": 600.0,
+        "datum": "2025-12-31 16:42"
     }
 ]

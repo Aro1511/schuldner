@@ -9,6 +9,12 @@ from logic import berechne_monatsschulden, berechne_jahresschulden, berechne_bet
 from datetime import datetime
 
 # ---------------------------------------------------------
+# SESSION STATE FÜR FORMULAR
+# ---------------------------------------------------------
+if "show_form" not in st.session_state:
+    st.session_state.show_form = True
+
+# ---------------------------------------------------------
 # PWA EINBINDUNG
 # ---------------------------------------------------------
 
@@ -63,7 +69,7 @@ st.success(f"💼 **Bezahlte Schulden im Jahr:** {bezahlt_jahr} €")
 # NEUEN SCHULDNER HINZUFÜGEN
 # ---------------------------------------------------------
 
-with st.expander("➕ dayn cusub kudar Neuen Schuldner hinzufügen"):
+with st.expander("➕ dayn cusub kudar Neuen Schuldner hinzufügen", expanded=st.session_state.show_form):
     schuldner = st.text_input("magaca dayn qaataha Name des Schuldners")
     schuldgeber = st.text_input("magaca dayn bixiyaha Name des Schuldgebers")
     art = st.text_input("nuuca dayntu tahay Art der Schulden")
@@ -84,7 +90,11 @@ with st.expander("➕ dayn cusub kudar Neuen Schuldner hinzufügen"):
             )
             add_schuld(eintrag)
             st.success(f"Schuld erfolgreich gespeichert ({betrag} €)")
+
+            # 🔥 Formular automatisch schließen
+            st.session_state.show_form = False
             st.rerun()
+
         else:
             st.error("Bitte alle Felder korrekt ausfüllen. Betrag muss eine gültige Rechnung sein.")
 
