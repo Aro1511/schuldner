@@ -7,6 +7,17 @@ from database import (
 )
 from logic import berechne_monatsschulden, berechne_jahresschulden, berechne_betrag
 from datetime import datetime
+# ---------------------------------------------------------
+# CSS laden
+# ---------------------------------------------------------
+def load_css():
+    try:
+        with open("style.css") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    except Exception:
+        st.warning("Konnte style.css nicht laden.")
+
+load_css()
 
 # ---------------------------------------------------------
 # SESSION STATE FÜR FORMULAR
