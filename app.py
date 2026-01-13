@@ -7,6 +7,16 @@ from database import (
 )
 from logic import berechne_monatsschulden, berechne_jahresschulden, berechne_betrag
 from datetime import datetime
+
+# ---------------------------------------------------------
+# LOGO OBEN LINKS
+# ---------------------------------------------------------
+col_logo, col_space = st.columns([1, 8])
+with col_logo:
+    st.image("logo.png", width=120)
+with col_space:
+    st.write("")
+
 # ---------------------------------------------------------
 # CSS laden
 # ---------------------------------------------------------
